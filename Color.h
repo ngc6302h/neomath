@@ -1,4 +1,5 @@
 #pragma once
+#include "Vectors.h"
 
 namespace neo
 {
@@ -10,13 +11,19 @@ namespace neo
             
             rgb(unsigned char R, unsigned char G, unsigned char B) : r(R), g(G), b(B)
             {}
-    
+            
             rgb(float R, float G, float B) : r(R*255), g(G*255), b(B*255)
             {}
             
             rgb(unsigned char v) : r(v), g(v), b(v)
             {}
+            
+            rgb(const float3& other) : r(other.x*255), g(other.y*255), b(other.z*255)
+            {}
     
+            rgb(const double3& other) : r(other.x*255), g(other.y*255), b(other.z*255)
+            {}
+            
             template<typename ScalarT>
             rgb& operator *=(ScalarT scalar)
             {
@@ -33,7 +40,7 @@ namespace neo
                 b += other.b;
                 return *this;
             }
-    
+            
             template<typename ScalarT>
             rgb operator *(ScalarT scalar)
             {
@@ -41,7 +48,7 @@ namespace neo
                 result *= scalar;
                 return result;
             }
-    
+            
             rgb operator +(rgb const& other)
             {
                 rgb result(*this);
@@ -60,7 +67,7 @@ namespace neo
                 };
             };
         };
-    
+        
         template<typename ScalarT>
         rgb operator +(ScalarT left, rgb const& right)
         {
@@ -68,7 +75,7 @@ namespace neo
             result += left;
             return result;
         }
-    
+        
         template<typename ScalarT>
         rgb operator *(ScalarT left, rgb const& right)
         {
@@ -89,7 +96,7 @@ namespace neo
             
             rgba(unsigned char R, unsigned char G, unsigned char B) : r(R), g(G), b(B), a(255)
             {}
-    
+            
             rgba(float R, float G, float B) : r(R*255), g(G*255), b(B*255), a(255)
             {}
             
@@ -98,7 +105,7 @@ namespace neo
             
             rgba(rgb const& color) : r(color.r), g(color.g), b(color.b), a(255)
             {}
-    
+            
             template<typename ScalarT>
             rgba& operator *=(ScalarT scalar)
             {
@@ -108,7 +115,7 @@ namespace neo
                 a = ScalarT(a) * scalar;
                 return *this;
             }
-    
+            
             rgba& operator +=(rgb const& other)
             {
                 r *= other.r;
@@ -116,7 +123,7 @@ namespace neo
                 b *= other.b;
                 return *this;
             }
-    
+            
             rgba& operator +=(rgba const& other)
             {
                 r += other.r;
@@ -125,7 +132,7 @@ namespace neo
                 a += other.a;
                 return *this;
             }
-    
+            
             template<typename ScalarT>
             rgba operator *(ScalarT scalar)
             {
@@ -133,14 +140,14 @@ namespace neo
                 result *= scalar;
                 return result;
             }
-    
+            
             rgba operator +(rgb const& other)
             {
                 rgba result(*this);
                 result += other;
                 return result;
             }
-    
+            
             rgba operator +(rgba const& other)
             {
                 rgba result(*this);
@@ -160,7 +167,7 @@ namespace neo
                 };
             };
         };
-    
+        
         template<typename ScalarT>
         rgba operator +(ScalarT left, rgba const& right)
         {
@@ -168,7 +175,7 @@ namespace neo
             result += left;
             return result;
         }
-    
+        
         template<typename ScalarT>
         rgba operator *(ScalarT left, rgba const& right)
         {
