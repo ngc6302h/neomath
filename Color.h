@@ -5,6 +5,8 @@ namespace neo
 {
     namespace color
     {
+        struct rgba;
+        
         struct rgb
         {
             rgb() = default;
@@ -12,16 +14,20 @@ namespace neo
             rgb(unsigned char R, unsigned char G, unsigned char B) : r(R), g(G), b(B)
             {}
             
-            rgb(float R, float G, float B) : r(R*255), g(G*255), b(B*255)
-            {}
+            rgb(rgba const& other);
+            
+            static rgb from_float(float R, float G, float B)
+            {
+                return rgb(R*255.f, G*255.f, B*255.f);
+            }
             
             rgb(unsigned char v) : r(v), g(v), b(v)
             {}
             
-            rgb(const float3& other) : r(other.x*255), g(other.y*255), b(other.z*255)
+            rgb(const float3& other) : r(other.x*255.f), g(other.y*255.f), b(other.z*255.f)
             {}
     
-            rgb(const double3& other) : r(other.x*255), g(other.y*255), b(other.z*255)
+            rgb(const double3& other) : r(other.x*255.f), g(other.y*255.f), b(other.z*255.f)
             {}
             
             template<typename ScalarT>
@@ -183,6 +189,8 @@ namespace neo
             result *= left;
             return result;
         }
+    
+        rgb::rgb(rgba const& other) : r(other.r), g(other.g), b(other.b) {}
     }
 }
 
