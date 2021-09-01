@@ -61,6 +61,12 @@ namespace neo
                 result += other;
                 return result;
             }
+    
+            rgb operator *(rgb const& other)
+            {
+                using u8 = unsigned char;
+                return {u8((r*other.r) / 255), u8((g*other.g)/255), u8 ((b*other.b)/255)};
+            }
             
             union
             {
@@ -93,17 +99,21 @@ namespace neo
         struct rgba
         {
             rgba() = default;
+    
+            static rgba from_float(float R, float G, float B, float A)
+            {
+                return {R*255.f, G*255.f, B*255.f, A * 255.f};
+            }
+    
+            static rgba from_float(float R, float G, float B)
+            {
+                return {R*255.f, G*255.f, B*255.f, 255};
+            }
             
             rgba(unsigned char R, unsigned char G, unsigned char B, unsigned char A) : r(R), g(G), b(B), a(A)
             {}
             
-            rgba(float R, float G, float B, float A) : r(R*255), g(G*255), b(B*255), a(A*255)
-            {}
-            
             rgba(unsigned char R, unsigned char G, unsigned char B) : r(R), g(G), b(B), a(255)
-            {}
-            
-            rgba(float R, float G, float B) : r(R*255), g(G*255), b(B*255), a(255)
             {}
             
             rgba(unsigned char v) : r(v), g(v), b(v), a(v)
@@ -145,6 +155,12 @@ namespace neo
                 rgba result(*this);
                 result *= scalar;
                 return result;
+            }
+            
+            rgba operator *(rgba const& other)
+            {
+                using u8 = unsigned char;
+                return rgba { u8((r*other.r)/255), u8((g*other.g) / 255), u8((b*other.b) / 255), u8((a*other.a) / 255)};
             }
             
             rgba operator +(rgb const& other)
